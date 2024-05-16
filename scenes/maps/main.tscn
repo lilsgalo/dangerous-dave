@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dotmmtid5w7ak"]
+
+[ext_resource type="PackedScene" uid="uid://dk08bf3ckkl06" path="res://scenes/environment/tile_map.tscn" id="1_1ax5n"]
+[ext_resource type="PackedScene" uid="uid://8jsbvrs7shaq" path="res://scenes/characters/Player.tscn" id="2_ocum2"]
+[ext_resource type="PackedScene" uid="uid://bn1l5776vhj8h" path="res://scenes/environment/coin.tscn" id="3_o7guj"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="4_hsy1m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p0i5g"]
+font_size = 21
+
+[node name="Map" type="Node"]
+
+[node name="TileMap" parent="." instance=ExtResource("1_1ax5n")]
+
+[node name="Player" parent="." instance=ExtResource("2_ocum2")]
+position = Vector2(142, 506)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 18.0
+offset_right = 253.0
+offset_bottom = 56.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_p0i5g")
+script = ExtResource("4_hsy1m")
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("3_o7guj")]
+position = Vector2(94, 400)
+disable_mode = 1
+
+[node name="Coin2" parent="Coins" instance=ExtResource("3_o7guj")]
+position = Vector2(79, 130)
+disable_mode = 1
+
+[node name="Coin3" parent="Coins" instance=ExtResource("3_o7guj")]
+position = Vector2(1072, 124)
+disable_mode = 1
+
+[node name="Coin4" parent="Coins" instance=ExtResource("3_o7guj")]
+position = Vector2(1062, 399)
+disable_mode = 1
+
+[connection signal="point_added" from="Player" to="UserInterface/ScoreLabel" method="_on_player_point_added"]
+[connection signal="coin_collected" from="Coins/Coin" to="Player" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Coins/Coin2" to="Player" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Coins/Coin3" to="Player" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Coins/Coin4" to="Player" method="_on_coin_collected"]

@@ -1,0 +1,109 @@
+[gd_scene load_steps=9 format=3 uid="uid://8jsbvrs7shaq"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_cte6l"]
+[ext_resource type="Texture2D" uid="uid://cjvc7t40mrpn1" path="res://assets/adventurer/adventurer-Sheet.png" id="2_eq2oo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q04d4"]
+radius = 8.0
+height = 29.3333
+
+[sub_resource type="Animation" id="Animation_57hmx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Adventurer-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_a6o87"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Adventurer-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_khepa"]
+resource_name = "jump"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Adventurer-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 22, 15]
+}
+
+[sub_resource type="Animation" id="Animation_ccebr"]
+resource_name = "running"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Adventurer-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bf4r5"]
+_data = {
+"RESET": SubResource("Animation_57hmx"),
+"idle": SubResource("Animation_a6o87"),
+"jump": SubResource("Animation_khepa"),
+"running": SubResource("Animation_ccebr")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cte6l")
+
+[node name="Adventurer-sheet" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_eq2oo")
+hframes = 7
+vframes = 11
+frame = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 10)
+scale = Vector2(3, 3)
+shape = SubResource("CapsuleShape2D_q04d4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bf4r5")
+}
+speed_scale = 0.65
+
+[node name="Adventurer-sheet-guide" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(279, 155)
+texture = ExtResource("2_eq2oo")
